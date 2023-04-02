@@ -1,0 +1,4 @@
+function incrementTokenMaxAmount(uint256 amount) public onlyOwner {
+    emit SetNewValue("TOKEN_MAX_AMOUNT", TOKEN_MAX_AMOUNT, amount);
+    TOKEN_MAX_AMOUNT += amount;
+  }
