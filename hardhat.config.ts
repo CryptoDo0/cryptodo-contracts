@@ -25,8 +25,18 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 const config: HardhatUserConfig = {
   solidity: "0.8.4",
   networks: {
-    ropsten: {
-      url: process.env.ROPSTEN_URL || "",
+    bsc: {
+      url: process.env.BSC_RPC_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    bitTorrentTestnet: {
+      url: process.env.BITTORRENT_TESTNET_RPC_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    okc: {
+      url: process.env.OKC_RPC_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
@@ -36,7 +46,28 @@ const config: HardhatUserConfig = {
     currency: "USD",
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: {
+      bsc: process.env.BSC_EXPLORER_API_KEY || "",
+      bitTorrentTestnet: process.env.BITTORRENT_EXPLORER_API_KEY || "",
+    },
+    customChains: [
+      {
+        network: "bitTorrentTestnet",
+        chainId: 1029,
+        urls: {
+          apiURL: "https://api-testnet.bttcscan.com/api",
+          browserURL: "https://testnet.bttcscan.com",
+        },
+      },
+      {
+        network: "bsc",
+        chainId: 56,
+        urls: {
+          apiURL: "https://api.bscscan.com/api",
+          browserURL: "https://bscscan.com",
+        },
+      },
+    ],
   },
 };
 
